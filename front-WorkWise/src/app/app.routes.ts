@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './Persona/login/login.component';
 import { OfertasComponent } from './invitados/ofertas/ofertas.component';
+import { RegisterComponent } from './Persona/register/register.component';
 
 export const routes: Routes = [
     // invitados
@@ -22,10 +23,14 @@ export const routes: Routes = [
 
     // persona
     {
-        path: 'login',
+        path: 'loginPersona',
         component: LoginComponent
-    }
+    },
 
+    {
+        path: 'registerPersona',
+        component: RegisterComponent
+    }
 
 
 ];
