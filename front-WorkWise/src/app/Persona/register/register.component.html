@@ -1,5 +1,5 @@
 <div class="container-logo">
-        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" routerLink="/dashboard" routerLinkActive="active">
             <img class="logo" id="logo" src="/Imagenes/wknblack.png">
         </a>
     </div>
@@ -175,8 +175,8 @@
                 </div>
             </div>
             <div class="login">
-                <p data-trad="register.haveAccount">Ya tienes una cuenta?</p> <a th:href="@{/login/personas}"
-                    data-trad="register.loginHere">Inicia sesión!</a>
+                <p style="padding-right: 5px;">Ya tienes una cuenta?</p> 
+                <a class="a-login" routerLink="/loginPersona" routerLinkActive="active">Inicia sesión!</a>
             </div>
         </div>
         <div class="curva">

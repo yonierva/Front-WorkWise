@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthPersonaService {
+
+  private loggedin = new BehaviorSubject<boolean>(this.getToken() !== null);
 
   private apiUrl = 'http://localhost:8080/api/personas'; 
 
@@ -24,6 +26,7 @@ export class AuthPersonaService {
   // 🔹 Guardar token en el navegador
   saveToken(token: string) {
     localStorage.setItem('token', token);
+    this.loggedin.next(true);
   }
 
   // 🔹 Obtener token
@@ -34,10 +37,11 @@ export class AuthPersonaService {
   // 🔹 Cerrar sesión
   logout() {
     localStorage.removeItem('token');
+    this.loggedin.next(false);
   }
 
   // 🔹 Verificar si está logueado
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+  isLoggedIn(): Observable<boolean>  {
+    return this.loggedin.asObservable();
   }
 }

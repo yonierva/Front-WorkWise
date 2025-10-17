@@ -28,7 +28,38 @@
                             </label>
                         </div>
                         <!-- fin boton barra lateral filtro -->
-                    </div> 
+                        <div *ngIf="logueado" class="nav-item dropdown no-arrow" id="usuario-container">
+
+                            <img id="user-avatar" src="/imagen/perfil" alt="Persona Logo"
+                                onerror="this.onerror=null;this.src='/Imagenes/imagenperfil.png';">
+
+                            <input type="hidden" id="subirFoto" accept="image/*" style="display: block; margin-top: 10px;">
+
+                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                <span id="usuario" th:text="${persona.nombre}">Account</span>
+                            </a>
+                            <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                <a class="dropdown-item" th:href="@{/perfil/persona}" style="color: #0a1128;">
+                                    <i class="fas fa-user fa-sm fa-fw me-2 "></i>&nbsp;<span
+                                        data-trad="navbar.profile">Perfil</span>
+                                </a>
+                                <a class="dropdown-item" th:href="@{/persona/Postulaciones}" style="color: #0a1128;">
+                                    <i class="fas fa-file-alt fa-sm fa-fw me-2"></i>&nbsp;<span
+                                        data-trad="navbar.applications">Postulaciones</span>
+                                </a>
+                                <a class="dropdown-item" href="#" style="color: #0a1128;">
+                                    <i class="fas fa-briefcase fa-sm fa-fw me-2 "></i>&nbsp;<span data-trad="navbar.cv">Hoja
+                                        de vida</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item"  id="logout" (click)="logout()"
+                                    style="color: #0a1128;">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i><span
+                                        data-trad="navbar.logout">Cerrar sesión</span>
+                                </a>
+                            </div>
+                        </div> 
+                    </div>
                 </div>
             </nav>
             <!-- barra lateral filtro -->

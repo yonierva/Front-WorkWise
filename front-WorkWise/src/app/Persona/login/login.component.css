@@ -158,6 +158,16 @@
     border: none;
 }
 
+.toggle-password {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    z-index: 2;
+}
+
 .register{
     margin-top: 20px;
     display: flex;

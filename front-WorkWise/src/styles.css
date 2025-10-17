@@ -50,6 +50,15 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.dropdown-item{
+    cursor: pointer;
+}
+
+.dropdown-item:hover{
+    background-color: #0a1128 !important;
+    color: var(--text-light) !important;
+}
+
 /*!
  * Bootstrap  v5.3.2 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
