@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable,BehaviorSubject } from 'rxjs';
+import { A } from '@angular/cdk/keycodes';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,18 @@ export class AuthPersonaService {
   // 🔹 Registrar nuevo usuario
   register(persona: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/registrar`, persona);
+  }
+  
+  // 🔹 Obtener datos del usurio
+  getPersona(): Observable<any> {
+    const token = this.getToken();
+
+    if (!token) {
+      throw new Error('No hay token disponible');
+    }
+
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get(`${this.apiUrl}/perfil`, { headers });
   }
 
   // 🔹 Guardar token en el navegador

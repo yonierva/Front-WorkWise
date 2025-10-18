@@ -23,7 +23,6 @@ export class LoginComponent {
   login() {
     this.authService.login(this.usuario).subscribe({
       next: (response) => {
-        console.log('Login exitoso:', response);
         this.authService.saveToken(response.token);
         this.router.navigate(['/ofertasInicio']); 
       },
