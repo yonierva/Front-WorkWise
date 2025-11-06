@@ -58,7 +58,7 @@
                         <div class="perfil-info">
                             <strong>{{ persona?.nombre|| 'Tu Nombre' }}.pdf</strong>
                             <p *ngIf="!archivoCV">No se ha subido ningún archivo</p>
-                            <p *ngIf="archivoCV">Archivo seleccionado: {{ archivoCV?.name}}</p>
+                            <p *ngIf="archivoCV">Archivo seleccionado: {{ archivoCV.name}}</p>
 
                             <!-- Botones -->
                             <div class="perfil-actions mt-2">

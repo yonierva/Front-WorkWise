@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { A } from '@angular/cdk/keycodes';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { A } from '@angular/cdk/keycodes';
 export class AuthPersonaService {
 
   private loggedin = new BehaviorSubject<boolean>(this.getToken() !== null);
+  private loggedInSubject = new BehaviorSubject<boolean>(!!this.getToken());
 
   private apiUrl = 'http://localhost:8080/api/personas';
 
@@ -29,7 +30,8 @@ export class AuthPersonaService {
     const token = this.getToken();
 
     if (!token) {
-      throw new Error('No hay token disponible');
+      console.warn('No se encontró token de autenticación para empresa.');
+      return of(null);
     }
 
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
@@ -111,22 +113,22 @@ export class AuthPersonaService {
 
   // Guardar token en el navegador
   saveToken(token: string) {
-    localStorage.setItem('token', token);
+    localStorage.setItem('token_persona', token);
     this.loggedin.next(true);
   }
 
   // Obtener token
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem('token_persona');
   }
 
   // Cerrar sesión
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('token_persona');
     this.loggedin.next(false);
   }
 
-  // erificar si está logueado
+  // Verificar si está logueado
   isLoggedIn(): Observable<boolean> {
     return this.loggedin.asObservable();
   }

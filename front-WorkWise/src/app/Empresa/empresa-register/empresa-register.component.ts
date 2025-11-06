@@ -1,37 +1,30 @@
 import { Component } from '@angular/core';
-import { AuthPersonaService } from '../../services/auth-personsa.service';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterLink, RouterLinkActive, Router } from "@angular/router";
+import { AuthEmpresaService } from '../../services/auth-empresa.service';
 import Swal from 'sweetalert2';
-import flatpickr from "flatpickr";
-import { Spanish } from 'flatpickr/dist/l10n/es.js';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-empresa-register',
+  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
+  templateUrl: './empresa-register.component.html',
+  styleUrl: './empresa-register.component.css'
 })
-export class RegisterComponent {
-
+export class EmpresaRegisterComponent {
   step: number = 1;
-  private flatpickrInstance: any;
-  passwordsMatch: boolean | null = null;
   confirmPassword: string = '';
+  passwordsMatch: boolean | null = null;
 
-  persona = {
+  empresa = {
     nombre: '',
-    apellido: '',
-    numero_documento: '',
-    tipo_Documento: '',
-    fecha_Nacimiento: '',
-    genero: '',
+    razonSocial: '',
     direccion: '',
+    nit: '',
     telefono: '',
     tipo_telefono: '',
-    profesion: '',
+    sector: '',
+    descripcion: '',
     usuario: {
       email: '',
       password: ''
@@ -42,20 +35,7 @@ export class RegisterComponent {
   nextStep() {
     if (this.step < 2) {
       this.step++;
-      console.log(this.persona);
-      setTimeout(() => {
-        const fechaInput = document.getElementById('fecha');
-
-        if (fechaInput) {
-          flatpickr(fechaInput, {
-            dateFormat: 'Y-m-d',
-            altFormat: 'd/m/Y',
-            locale: Spanish,
-            maxDate: 'today'
-          });
-        }
-        console.log(fechaInput);
-      }, 100);
+      console.log();
     }
   }
 
@@ -65,42 +45,32 @@ export class RegisterComponent {
     }
   }
 
-  constructor(private authService: AuthPersonaService, private router: Router) { }
+  constructor(private authService: AuthEmpresaService, private router: Router) { }
 
-  register() {
-    const nacimiento = new Date(this.persona.fecha_Nacimiento);
-    const hoy = new Date();
-    let edad = hoy.getFullYear() - nacimiento.getFullYear();
-    const m = hoy.getMonth() - nacimiento.getMonth();
-
-    if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
-      edad--;
-    }
-
-    if (edad < 18) {
+  registerEmpresa() {
+    if (this.empresa.usuario.password !== this.confirmPassword) {
       Swal.fire({
         title: 'Error',
-        text: 'Debes ser mayor de 18 años para registrarte.',
+        text: 'Las contraseñas no coinciden.',
         icon: 'error',
         timer: 2000,
       });
-      return;
+      return
     }
 
-    this.authService.register(this.persona).subscribe({
+    this.authService.register(this.empresa).subscribe({
       next: (response) => {
-        console.log('Registro exitoso:', response);
+        console.log('Empresa registrada con éxito', response);
         Swal.fire({
           title: 'Éxito',
           text: 'Empresa registrada con éxito.',
           icon: 'success',
           timer: 2000,
         }).then(() => {
-          this.router.navigate(['/loginPersona']);
+          this.router.navigate(['/loginEmpresa']);
         });
-      },
-      error: (error) => {
-        console.error('Error en el registro:', error);
+      }, error: (error) => {
+        console.error('Error al registrar la empresa', error);
         Swal.fire({
           title: 'Error',
           text: 'Hubo un error al registrar la empresa.',
@@ -113,11 +83,11 @@ export class RegisterComponent {
 
 
   checkPasswordsMatch() {
-    if (!this.persona.usuario.password || !this.confirmPassword) {
+    if (!this.empresa.usuario.password || !this.confirmPassword) {
       this.passwordsMatch = null; // no mostrar nada si alguno está vacío
       return;
     }
-    this.passwordsMatch = this.persona.usuario.password === this.confirmPassword;
+    this.passwordsMatch = this.empresa.usuario.password === this.confirmPassword;
   }
 
   passwordStrength = {

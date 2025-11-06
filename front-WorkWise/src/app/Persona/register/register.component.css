@@ -150,7 +150,7 @@ body {
     position: absolute;
     padding: 3px !important;
     top: 50%;
-    left: 16px;
+    left: 15px;
     transform: translateY(-60%);
     color: rgba(0, 0, 0, 0.9);
     font-size: 15px;

@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthPersonaService } from '../../services/auth-personsa.service';
+import { AuthEmpresaService } from '../../services/auth-empresa.service';
+import { AuthService } from '../../services/auth.service';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -12,34 +14,52 @@ import { NgIf } from '@angular/common';
 export class NavbarbusquedaComponent {
   @Input() modo: 'link' | 'buscador' = 'link';
   logueado = false;
-  persona: any = null ;
+  persona: any = null;
+  empresa: any = null;
 
-  constructor(private authService: AuthPersonaService, private router:Router ) { }
+  constructor(private authPersonaService: AuthPersonaService, private authEmpresaService: AuthEmpresaService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.authService.isLoggedIn().subscribe((estado) => {
       this.logueado = estado;
       if (estado) {
-        this.cargarUsuario()
-        this.authService.getFotoPerfil(this.persona?.id).subscribe(blob => {
-          this.persona.photo = URL.createObjectURL(blob);
-        })
-      }else {
+        this.authService.rolActual().subscribe(rol => {
+          if (rol === 'PERSONA') {
+            this.cargarUsuario();
+          } else if (rol === 'EMPRESA') {
+            this.cargarEmpresa();
+          }
+        });
+      } else {
         this.persona = null;
+        this.empresa = null;
       }
     });
   }
 
   cargarUsuario() {
-    this.authService.getPersona().subscribe({next: (data) =>{
-      this.persona = data;
-      console.log(this.persona);
-      this.authService.getFotoPerfil(this.persona.id).subscribe(blob =>{
+    this.authPersonaService.getPersona().subscribe({
+      next: (data) => {
+        this.persona = data;
+        console.log(this.persona);
+        this.authPersonaService.getFotoPerfil(this.persona.id).subscribe(blob => {
           this.persona.photo = URL.createObjectURL(blob);
-      })
-    },error: (err) =>{
-      console.error('Error al cargar los datos del usuario', err);
-    }})
+        })
+      }, error: (err) => {
+        console.error('Error al cargar los datos del usuario', err);
+      }
+    });
+  }
+
+  cargarEmpresa() {
+    this.authEmpresaService.getEmpresa().subscribe({
+      next: (data) => {
+        this.empresa = data;
+        console.log(this.empresa);
+      }, error: (err) => {
+        console.error('Error al cargar los datos de la empresa', err);
+      }
+    });
   }
 
   get iniciales(): string {

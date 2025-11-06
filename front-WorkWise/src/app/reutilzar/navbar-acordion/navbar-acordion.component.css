@@ -5,9 +5,12 @@
   height: 100%;
 }
 
-.sidebar {
-  background: var(--primary-color);
-  width: 100px;
+.persona-navbar, .invitado-navbar {
+  background: linear-gradient(180deg, #001f54, #0a1128 );
+}
+
+.empresa-navbar {
+  background: linear-gradient(180deg, #2c2c2c, #4a4a4a);
 }
 
 .nav-item{

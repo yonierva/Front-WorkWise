@@ -1,0 +1,160 @@
+<div class="container-logo">
+    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" routerLink="/dashboard"
+        routerLinkActive="active">
+        <img class="logo" id="logo" src="/Imagenes/wknblack.png">
+    </a>
+</div>
+<div class="contenedor">
+    <div class="container-register">
+        <div class="card">
+            <div class="head-card">
+                <h1 data-trad="crearCuenta">Crea una cuenta</h1>
+            </div>
+            <p data-trad="subtitulo">Registra tu empresa y empieza a crecer con nosotros.</p>
+            <div class="formulario">
+                <form #registerEmpresaForm="ngForm" (ngSubmit)="registerEmpresa()" class="user">
+                    <div *ngIf="step === 1" class="animate__animated animate__fadeIn">
+                        <div class="row">
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text"
+                                        [(ngModel)]="empresa.nombre" placeholder="" name="nombreEmp" required>
+                                    <label for="nombreEmp" class="label" data-trad="nombreCompania">Nombre de la
+                                        compañia</label>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" placeholder=""
+                                        [(ngModel)]="empresa.razonSocial" name="razon_social" required>
+                                    <label for="razon_social" class="label" data-trad="razonSocial">Razón social</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control form-control-user" type="email" aria-describedby="emailHelp"
+                                [(ngModel)]="empresa.usuario.email" placeholder="" id="email" name="email" required>
+                            <label for="email" class="label" data-trad="correoElectronico">Correo electronico</label>
+                            <div class="validation-message" id="emailValidation" style="display: none;"></div>
+                        </div>
+                        <div class="row">
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <div class="password-input">
+                                        <input class="form-control form-control-user" type="password" placeholder=""
+                                            [(ngModel)]="empresa.usuario.password"
+                                            (input)="checkPasswordStrength(empresa.usuario.password); checkPasswordsMatch()"
+                                            id="password" name="contraseña" minlength="6" maxlength="45" required>
+                                        <i class="fas fa-eye toggle-password"
+                                            (click)="togglePasswordVisibility('password')"></i>
+                                        <label for="password" class="label" data-trad="contrasena">Contraseña</label>
+                                    </div>
+                                    <div class="password-strength-container">
+                                        <div class="password-strength-bar" [style.width]="passwordStrength.width"
+                                            [style.background-color]="passwordStrength.color"></div>
+                                        <div class="password-strength-text">{{ passwordStrength.text }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <div class="password-input">
+                                        <input class="form-control form-control-user" type="password" placeholder=""
+                                            [(ngModel)]="confirmPassword" (input)="checkPasswordsMatch()"
+                                            id="confirm-password" name="confirm-password" minlength="6" maxlength="45"
+                                            required>
+                                        <i class="fas fa-eye toggle-password"
+                                            (click)="togglePasswordVisibility('confirm-password')"></i>
+                                        <label for="confirm-password" class="label">Repetir Contraseña</label>
+                                    </div>
+                                    <div class="password-match">
+                                        <span *ngIf="passwordsMatch === true" style="color: green;">Las contraseñas coinciden</span>
+                                        <span *ngIf="passwordsMatch === false" style="color: red;">Las contraseñas no coinciden</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary d-block btn-user w-100" (click)="nextStep()"
+                        [disabled]="!empresa.nombre || !empresa.razonSocial || !empresa.usuario.password ||
+                            !confirmPassword || !empresa.usuario.email || (empresa.usuario.password !== confirmPassword)">
+                            Siguiente
+                        </button>
+                    </div>
+                    <div *ngIf="step === 2" class="animate__animated animate__fadeIn">
+                        <div class="container-back">
+                            <button type="button" (click)="prevStep()" class="back_a" style="border: none;">
+                                <i class="fas fa-arrow-left back"></i>
+                            </button>
+                        </div>
+                        <div class="row">
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" placeholder="" id="nit"
+                                    [(ngModel)]="empresa.nit"  name="nit" minlength="7" maxlength="9" required>
+                                    <label for="nit" class="label" data-trad="nit">Nit</label>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <select name="direccion" id="direccion" class="form-control form-control-btn"
+                                    [(ngModel)]="empresa.direccion" required>
+                                        <option value="" hidden></option>
+                                        <option value="socorro">socorro</option>
+                                        <option value="campestre">campestre</option>
+                                    </select>
+                                    <label for="direccion" class="label-active">Direccion</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <select name="tipoTelefono" id="tipoTelefono" class="form-control form-control-btn"
+                                    [(ngModel)]="empresa.tipo_telefono" required>
+                                        <option value="" hidden></option>
+                                        <option value="Fijo">Fijo</option>
+                                        <option value="Celular">Celular</option>
+                                    </select>
+                                    <label for="tipoTelefono" class="label-active">Tipo de telefono</label>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" placeholder=""
+                                    [(ngModel)]="empresa.telefono" id="Numero_telefono" name="Numero_telefono" required>
+                                    <label for="Numero_telefono" class="label">Número de telefono</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <select name="sector" id="sector" class="form-control form-control-btn" 
+                            [(ngModel)]="empresa.sector" required>
+                                <option value="" hidden></option>
+                                <option value="ing-sistemas">ing-sistemas</option>
+                                <option value="medico">medico</option>
+                            </select>
+                            <label for="sector" class="label-active">Sector empresarial</label>
+                        </div>
+                        <div class="mb-3">
+                            <textarea  name="descripcion" id="descripcion" class="form-control form-control-user" 
+                            [(ngModel)]="empresa.descripcion" placeholder=""></textarea>
+                            <label for="descripcion" class="label">Describe tu empresa</label>
+                        </div>
+                        <button class="btn btn-primary d-block btn-user w-100" type="submit" id="btn-register">
+                            Register
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="login">
+            <p style="padding-right: 10px;">Ya tienes una cuenta de empresa?</p>
+            <a routerLink="/loginEmpresa" routerLinkActive="active">
+                Inicia sesión!
+            </a>
+        </div>
+    </div>
+    <div class="curva">
+        <div class="container-img"></div>
+    </div>
+</div>

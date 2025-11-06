@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { AuthPersonaService } from '../../services/auth-personsa.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -24,11 +25,21 @@ export class personaLoginComponent {
     this.authService.login(this.usuario).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
-        this.router.navigate(['/ofertasInicio']); 
+        Swal.fire({
+          icon: 'success',
+          title: '¡Login exitoso!',
+          timer: 1500
+        }).then(() => {
+          this.router.navigate(['/ofertasInicio']);
+        });
       },
       error: (error) => {
         console.error('Error de login:', error);
-        alert('Credenciales incorrectas. Por favor, intenta de nuevo.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de login',
+          text: 'Credenciales incorrectas. Por favor, intenta de nuevo.'
+        });
       }
     });
   }
