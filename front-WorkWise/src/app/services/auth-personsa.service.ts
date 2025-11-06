@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { A } from '@angular/cdk/keycodes';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,6 @@ import { A } from '@angular/cdk/keycodes';
 export class AuthPersonaService {
 
   private loggedin = new BehaviorSubject<boolean>(this.getToken() !== null);
-  private loggedInSubject = new BehaviorSubject<boolean>(!!this.getToken());
 
   private apiUrl = 'http://localhost:8080/api/personas';
 

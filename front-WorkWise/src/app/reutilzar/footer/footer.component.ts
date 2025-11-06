@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { NgIf, NgClass } from '@angular/common';
-import { of, combineLatest } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-footer',
-  imports: [NgIf, NgClass],
+  imports: [ NgClass],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css'
 })

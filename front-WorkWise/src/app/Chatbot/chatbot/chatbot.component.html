@@ -1,0 +1,27 @@
+<div class="chatbot-container" [class.abierto]="abierto">
+    <div class="chat-header" (click)="abierto = !abierto">
+        💬 Chatbot IA
+    </div>
+
+    <div class="chat-container" *ngIf="abierto">
+        <div class="chat-body" #chatMessages>
+            <div *ngFor="let msg of mensajes" class="container-mensaje">
+                <div [ngClass]="{'message': true,'user-message': msg.emisor === 'usuario', 'bot-message': msg.emisor === 'bot'}">
+                    {{ msg.texto }}
+                </div>
+
+                <!-- 🔘 Botones dinámicos del bot -->
+                <div *ngIf="msg.botones?.length" class="bot-buttons">
+                    <button *ngFor="let b of msg.botones" (click)="accionBoton(b.accion)">
+                        {{ b.texto }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input [(ngModel)]="mensajeActual" placeholder="Escribe un mensaje..." (keydown.enter)="enviarMensaje()" />
+            <button (click)="enviarMensaje()">Enviar</button>
+        </div>
+    </div>
+</div>

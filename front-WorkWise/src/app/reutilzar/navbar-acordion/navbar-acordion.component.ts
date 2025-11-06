@@ -2,11 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NgIf, NgClass } from '@angular/common';
-import { of, combineLatest } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-
-
-
 @Component({
   selector: 'app-navbar-acordion',
   imports: [RouterLink, RouterLinkActive, NgIf, NgClass],
