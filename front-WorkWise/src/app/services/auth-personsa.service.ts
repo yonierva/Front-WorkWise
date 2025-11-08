@@ -111,18 +111,30 @@ export class AuthPersonaService {
 
   // Guardar token en el navegador
   saveToken(token: string) {
-    localStorage.setItem('token_persona', token);
+    localStorage.setItem('token', token);
     this.loggedin.next(true);
+  }
+
+  //Guardar rol en el navegador
+  saveRol(rol: string) {
+    localStorage.setItem('rol', rol);
+    this.loggedin.next(true);
+  }
+
+  // Obtener rol
+  getRol():string | null{
+    return localStorage.getItem('rol')
   }
 
   // Obtener token
   getToken(): string | null {
-    return localStorage.getItem('token_persona');
+    return localStorage.getItem('token');
   }
 
   // Cerrar sesión
   logout() {
-    localStorage.removeItem('token_persona');
+    localStorage.removeItem('token');
+    localStorage.removeItem('rol')
     this.loggedin.next(false);
   }
 

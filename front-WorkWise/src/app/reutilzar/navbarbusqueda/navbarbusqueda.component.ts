@@ -28,6 +28,7 @@ export class NavbarbusquedaComponent {
             this.cargarUsuario();
           } else if (rol === 'EMPRESA') {
             this.cargarEmpresa();
+            console.log(estado)
           }
         });
       } else {
@@ -62,11 +63,19 @@ export class NavbarbusquedaComponent {
     });
   }
 
-  get iniciales(): string {
+  get inicialesPer(): string {
     if (!this.persona?.nombre || !this.persona?.apellido) return '';
     return (
       this.persona.nombre.charAt(0).toUpperCase() +
       this.persona.apellido.charAt(0).toUpperCase()
+    );
+  }
+
+  get inicialesEmp(): string {
+    if (!this.empresa?.nombre) return '';
+    return (
+      this.empresa.nombre.charAt(0).toUpperCase() +
+      this.empresa.nombre.charAt(1).toUpperCase()
     );
   }
 

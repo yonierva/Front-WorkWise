@@ -24,6 +24,7 @@ export class empresaLoginComponent {
     this.authService.login(this.usuario).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
+        this.authService.saveRol(response.rol)
         Swal.fire({
           icon: 'success',
           title: '¡Login exitoso!',

@@ -4,9 +4,25 @@
     </div>
 
     <div class="chat-container" *ngIf="abierto">
+        <div class="chat-switch">
+            <div 
+                class="switch-option" 
+                [class.activo]="tipoChatbot === 'antiguo'" 
+                (click)="tipoChatbot = 'antiguo'">
+                Clásico
+            </div>
+            <div 
+                class="switch-option" 
+                [class.activo]="tipoChatbot === 'nuevo'" 
+                (click)="tipoChatbot = 'nuevo'">
+                IA 🤖
+            </div>
+            <div class="switch-slider" [class.right]="tipoChatbot === 'nuevo'"></div>
+        </div>
         <div class="chat-body" #chatMessages>
             <div *ngFor="let msg of mensajes" class="container-mensaje">
-                <div [ngClass]="{'message': true,'user-message': msg.emisor === 'usuario', 'bot-message': msg.emisor === 'bot'}">
+                <div
+                    [ngClass]="{'message': true,'user-message': msg.emisor === 'usuario', 'bot-message': msg.emisor === 'bot'}">
                     {{ msg.texto }}
                 </div>
 

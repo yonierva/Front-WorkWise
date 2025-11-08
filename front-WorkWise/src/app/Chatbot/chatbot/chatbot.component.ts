@@ -24,16 +24,7 @@ export class ChatbotComponent {
   abierto: boolean = false;
   escribiendo: boolean = false;
 
-  private urls: Record<string, string> = {
-    abrir_login: '/login',
-    abrir_registro: '/registro',
-    abrir_registro_persona: '/registro/persona',
-    abrir_registro_empresa: '/registro/empresa',
-    abrir_ofertas: '/ofertas',
-    abrir_categorias: '/ofertas/categorias',
-    abrir_perfil: '/perfil',
-    mostrar_menu: 'menu'
-  }
+  tipoChatbot: 'antiguo' | 'nuevo' = 'antiguo';
 
   constructor(private authChatbotService: AuthChatbotService, private router: Router) { }
 
@@ -46,20 +37,30 @@ export class ChatbotComponent {
     this.mensajeActual = '';
     this.scrollAbajo();
 
-    this.authChatbotService.enviarMensaje(texto).subscribe({
-      next: (res) => {
-        const respuesta = typeof res === 'string' ? JSON.parse(res) : res;
-        this.mensajes.push({
-          texto: respuesta.texto || '...',
-          emisor: 'bot',
-          botones: respuesta.botones || []
-        });
+    this.escribiendo = true;
 
-        // Desplaza hacia abajo una vez renderizado el mensaje
+    this.authChatbotService.enviarMensaje(texto, this.tipoChatbot).subscribe({
+      next: (res) => {
+        this.escribiendo = false;
+
+        let respuestaTexto: string;
+        let botones: any[] = [];
+
+        if (this.tipoChatbot === 'nuevo') {
+          respuestaTexto = res;
+        } else {
+          const respuesta = typeof res === 'string' ? JSON.parse(res) : res;
+          respuestaTexto = respuesta.texto || '...';
+          botones = respuesta.botones || [];
+        }
+
+        this.mensajes.push({ texto: respuestaTexto, emisor: 'bot', botones });
         setTimeout(() => this.scrollAbajo(), 100);
       },
       error: (err) => {
+        this.escribiendo = false;
         console.error('Error en chatbot:', err);
+        this.mensajes.push({ texto: 'Hubo un error al conectar con el chatbot.', emisor: 'bot' });
       }
     });
   }

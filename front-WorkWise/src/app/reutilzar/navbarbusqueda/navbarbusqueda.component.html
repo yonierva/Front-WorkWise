@@ -30,13 +30,17 @@
                 <img *ngIf="persona?.photo" id="user-avatar" [src]="persona?.photo" alt="Persona Logo">
 
                 <div *ngIf="!persona?.photo"  class="profile-initials rounded-circle d-flex align-items-center justify-content-center">
-                    {{ iniciales }}
+                    {{ inicialesPer}}
+                </div>
+
+                <div *ngIf="!persona?.photo"  class="profile-initials rounded-circle d-flex align-items-center justify-content-center">
+                    {{ inicialesEmp}}
                 </div>
 
                 <input type="hidden" id="subirFoto" accept="image/*" style="display: block; margin-top: 10px;">
 
                 <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
-                    <span id="usuario">{{persona?.nombre}}</span>
+                    <span id="usuario">{{persona?.nombre || empresa?.nombre}}</span>
                 </a>
                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                     <a class="dropdown-item" routerLink="/perfilPersona" routerLinkActive="active" style="color: #0a1128;" >
