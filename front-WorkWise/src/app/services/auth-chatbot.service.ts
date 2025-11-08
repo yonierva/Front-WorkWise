@@ -18,7 +18,7 @@ export class AuthChatbotService {
   enviarMensaje(mensaje: string, tipo: 'antiguo' | 'nuevo'): Observable<any> {
     if(tipo === 'nuevo'){
       const params = new HttpParams().set('message', mensaje);
-      return this.http.get<any>(this.apiUrlNuevo, { params });
+      return this.http.get(this.apiUrlNuevo, { params, responseType: 'text' }  );
     }
     else{
       return this.http.post<any>(this.apiUrlAntiguo, { mensaje });
