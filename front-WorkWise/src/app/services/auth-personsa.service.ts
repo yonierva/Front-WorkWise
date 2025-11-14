@@ -97,8 +97,30 @@ export class AuthPersonaService {
 
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     const body = {nombre: habilidad}
-    return this.http.post(`${this.apiUrl}/habilidades`, body, { headers });
-  } 
+    return this.http.post(`${this.apiUrl}/habilidades`, body, { headers, responseType: 'text'});
+  }
+  
+  getHabilidades(){
+    const token = this.getToken();
+    if (!token) {
+      console.warn('No hay token disponible');
+      return of([]);
+    }
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return this.http.get<any[]>(`${this.apiUrl}/habilidades`, { headers }); 
+  }
+
+  deleteHabilidades(id: number):Observable<string>{
+    const token = this.getToken();
+    if (!token) {
+      console.warn('No hay token disponible');
+    }
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return this.http.delete(`${this.apiUrl}/habilidades/${id}`, {headers, responseType: 'text' });
+  }
+
 
   getFotoPerfil(id: number): Observable<any> {
     const token = this.getToken();

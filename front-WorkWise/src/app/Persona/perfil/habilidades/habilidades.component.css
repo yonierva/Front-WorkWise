@@ -1,11 +1,22 @@
+.perfil-section {
+    margin-top: 30px;
+}
+
+.perfil-section h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
 .perfil-card-link {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: 1px solid #ddd;
-    border-radius: 12px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
     padding: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 1px;
     background: #fff;
     cursor: pointer;
     transition: all 0.3s;
@@ -23,6 +34,76 @@
     color: #666;
     font-size: 0.9rem;
     margin: 4px 0 0;
+}
+
+.arrow {
+    font-size: 18px;
+    transition: transform .3s ease;
+}
+
+.arrow.open {
+    transform: rotate(90deg);
+}
+
+.habilidades-container {
+    overflow: hidden;
+    transition: all .6s ease;
+}
+
+.fas.open {
+    transform: rotate(90deg);
+    transition: .3s;
+}
+
+
+.habilidades-wrapper {
+    border: 1px solid #ddd;
+    border-top: none;
+    /* ❌ Sin borde superior para que se conecte */
+    border-radius: 0 0 12px 12px;
+    /* Esquinas inferiores */
+    background: #fafafa;
+    margin-top: -1px;
+    /* Unir perfectamente al card */
+    padding: 10px 0;
+}
+
+/* CADA HABILIDAD */
+.habilidad-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f3f3f3;
+    padding: 10px 15px;
+    margin: 5px 10px;
+    border-radius: 8px;
+}
+
+/* BOTÓN ROJO DE ELIMINAR */
+.delete-btn {
+    background: #ff5c5c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.btn-agregar {
+    margin-top: 10px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    background: #007bff;
+    border: none;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.btn-agregar:hover {
+    background: #0066d6;
 }
 
 /* === Modal === */
@@ -65,7 +146,7 @@
     width: 100%;
 }
 
-.header-title{
+.header-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -73,11 +154,11 @@
     padding: 20px;
 }
 
-.modal-body{
+.modal-body {
     padding: 20px;
 }
 
-.modal-footer{
+.modal-footer {
     border-top: solid 1px #e4e2e0;
 }
 
@@ -94,7 +175,7 @@
     font-weight: 500;
 }
 
-.modal-body input{
+.modal-body input {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -118,7 +199,7 @@
     margin: 5px;
 }
 
-.btn:focus{
+.btn:focus {
     border: 2px solid #0a1128;
 }
 
